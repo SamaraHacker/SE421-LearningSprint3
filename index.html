@@ -4,23 +4,23 @@
     <style>
         .flex-container {
             display: flex;
-            justify-content: center;
+            justify-content: left;
             background-color: rgb(0, 0, 0);
             padding: 10px;
         }
 
-        .flex-box-authenicated{
+        .flex-box-items{
             width: 100px;
             height: 50px;
-            background-color: rgb(255, 238, 80);
+            background-color: rgb(255, 255, 255);
             border: 2px solid rgb(60, 43, 0);
             text-align: center;
         }
 
-        .flex-box-buffer {
+        .flex-box-bucket {
             width: 100px;
             height: 50px;
-            background-color: rgb(255, 254, 254);
+            background-color: rgb(108, 159, 225);
             border: 2px solid rgb(98, 98, 98);
             text-align: center;
         }
@@ -33,82 +33,101 @@
         }
     </style>
     <script>
-        function resetText() {
-            document.getElementById("1").innerHTML = "";
-            document.getElementById("2").innerHTML = "";
-            document.getElementById("3").innerHTML = "";
-            document.getElementById("4").innerHTML = "";
-            document.getElementById("5").innerHTML = "";
-            document.getElementById("6").innerHTML = "";
-            document.getElementById("7").innerHTML = "";
-            document.getElementById("8").innerHTML = "";
+        function resetBoxes() {
+            document.getElementById("bucket0").innerHTML = '<div class="flex-box-bucket"><p>0</p></div>';
+            document.getElementById("bucket1").innerHTML = '<div class="flex-box-bucket"><p>1</p></div>';
+            document.getElementById("bucket2").innerHTML = '<div class="flex-box-bucket"><p>2</p></div>';
+            document.getElementById("bucket3").innerHTML = '<div class="flex-box-bucket"><p>3</p></div>';
+            document.getElementById("bucket4").innerHTML = '<div class="flex-box-bucket"><p>4</p></div>';
         }
-        function changeText() {
-            win = 0
-            resetText();
-            input = document.getElementById('fname').value;
-            length = input.length;
-            if (length >= 1) {
-                document.getElementById("1").innerHTML = input[0];
-                if(length >= 2) {
-                    document.getElementById("2").innerHTML = input[1];
-                    if(length >= 3) {
-                        document.getElementById("3").innerHTML = input[2];
-                        if(length >= 4) {
-                            document.getElementById("4").innerHTML = input[3];
-                            if(length >= 5){
-                                win = 1
-                                document.getElementById("5").innerHTML = input[4];
-                                if(length >= 6) {
-                                    document.getElementById("6").innerHTML = input[5];
-                                    if(length >= 7) {
-                                        document.getElementById("7").innerHTML = input[6];
-                                        document.getElementById("8").innerHTML = "\\0";
-                                    }
-                                    else {
-                                        document.getElementById("7").innerHTML = "\\0";
-                                    }
-                                }
-                                else {
-                                    document.getElementById("6").innerHTML = "\\0";
-                                }
-                            }
-                        }
-                    }
-                }
+        function countTotal() {
+            totalBucket0 = document.getElementById('bucket0').querySelectorAll('div').length;
+            totalBucket1 = document.getElementById('bucket1').querySelectorAll('div').length;
+            totalBucket2 = document.getElementById('bucket2').querySelectorAll('div').length;
+            totalBucket3 = document.getElementById('bucket3').querySelectorAll('div').length;
+            totalBucket4 = document.getElementById('bucket4').querySelectorAll('div').length;
+            
+            if(totalBucket0 == 16) {
+                alert("Congratulations, you filled bucket 0 causing the worst case scenario for the hash table");
+                resetBoxes();
             }
-            if (win) {
-                alert("Congrats! You caused a buffer overflow and are now authenticated")
+            else if (totalBucket1 == 16) {
+                alert("Congratulations, you filled bucket 1 causing the worst case scenario for the hash table");
+                resetBoxes();
             }
-            return false;
+            else if(totalBucket2 == 16) {
+                alert("Congratulations, you filled bucket 2 causing the worst case scenario for the hash table");
+                resetBoxes();
+            }
+            else if(totalBucket3 == 16) {
+                alert("Congratulations, you filled bucket 3 causing the worst case scenario for the hash table");
+                resetBoxes();
+            }
+            else if(totalBucket4 == 16) {
+                alert("Congratulations, you filled bucket 4 causing the worst case scenario for the hash table");
+                resetBoxes();
+            }
+        }
+        function addValue() {
+            number = document.getElementById('fname').value;
+            hashBucket = number % 5;
+
+            // Default
+            container = document.getElementById("bucket0");
+
+            if (hashBucket == 1) {
+                container = document.getElementById("bucket1");
+            }
+            else if (hashBucket == 2) {
+                container = document.getElementById("bucket2");
+            }
+            else if (hashBucket == 3) {
+                container = document.getElementById("bucket3");
+            }
+            else if (hashBucket == 4) {
+                container = document.getElementById("bucket4");
+            }
+
+            const newDiv = document.createElement('div');
+            newDiv.classList.add('flex-box-items');
+            newDiv.textContent = number;
+            container.appendChild(newDiv);
+
+            countTotal();
         }
     </script>
 </head>
 
 <body>
 
-<h1 style="text-align: center;">Buffer Overflow example</h1>
+<h1 style="text-align: center;">AC Attack Example: Hash Table DoS Attack</h1>
 
-<img src="code.png" class="center">
-
-<form style="text-align: center; padding: 24px;" onsubmit="changeText(); return false;">
+<form style="text-align: center; padding: 24px;" onsubmit="addValue(); return false;">
   <label for="fname">Enter input:</label>
-  <input type="text" id="fname" name="fname" maxlength="7"><br><br>
+  <input type="number" id="fname" name="fname" maxlength="2"><br><br>
   <input type="submit" value="Submit">
 </form>
 
-<div class="flex-container">
-    <div class="flex-box-buffer"><p id="1"></p></div>
-    <div class="flex-box-buffer"><p id="2"></p></div>
-    <div class="flex-box-buffer"><p id="3"></p></div>
-    <div class="flex-box-buffer"><p id="4"></p></div>
-    <div class="flex-box-authenicated"><p id="5"></p></div>
-    <div class="flex-box-authenicated"><p id="6"></p></div>
-    <div class="flex-box-authenicated"><p id="7"></p></div>
-    <div class="flex-box-authenicated"><p id="8"></p></div>
+<p style="align-content: left;">Buckets</p>
+<div class="flex-container" id="bucket0">
+    <div class="flex-box-bucket"><p>0</p></div>
 </div>
 
-<p style="text-align: center; word-spacing: 2400%;">buffer authenticated</p>
+<div class="flex-container" id="bucket1">
+    <div class="flex-box-bucket"><p>1</p></div>
+</div>
+
+<div class="flex-container" id="bucket2">
+    <div class="flex-box-bucket"><p>2</p></div>
+</div>
+
+<div class="flex-container" id="bucket3">
+    <div class="flex-box-bucket"><p>3</p></div>
+</div>
+
+<div class="flex-container" id="bucket4">
+    <div class="flex-box-bucket"><p>4</p></div>
+</div>
 
 </body>
 </html>
