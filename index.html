@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            background-color: rgb(0, 0, 0);
+            padding: 10px;
+        }
+
+        .flex-box-authenicated{
+            width: 100px;
+            height: 50px;
+            background-color: rgb(255, 238, 80);
+            border: 2px solid rgb(60, 43, 0);
+            text-align: center;
+        }
+
+        .flex-box-buffer {
+            width: 100px;
+            height: 50px;
+            background-color: rgb(255, 254, 254);
+            border: 2px solid rgb(98, 98, 98);
+            text-align: center;
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </style>
+    <script>
+        function resetText() {
+            document.getElementById("1").innerHTML = "";
+            document.getElementById("2").innerHTML = "";
+            document.getElementById("3").innerHTML = "";
+            document.getElementById("4").innerHTML = "";
+            document.getElementById("5").innerHTML = "";
+            document.getElementById("6").innerHTML = "";
+            document.getElementById("7").innerHTML = "";
+            document.getElementById("8").innerHTML = "";
+        }
+        function changeText() {
+            win = 0
+            resetText();
+            input = document.getElementById('fname').value;
+            length = input.length;
+            if (length >= 1) {
+                document.getElementById("1").innerHTML = input[0];
+                if(length >= 2) {
+                    document.getElementById("2").innerHTML = input[1];
+                    if(length >= 3) {
+                        document.getElementById("3").innerHTML = input[2];
+                        if(length >= 4) {
+                            document.getElementById("4").innerHTML = input[3];
+                            if(length >= 5){
+                                win = 1
+                                document.getElementById("5").innerHTML = input[4];
+                                if(length >= 6) {
+                                    document.getElementById("6").innerHTML = input[5];
+                                    if(length >= 7) {
+                                        document.getElementById("7").innerHTML = input[6];
+                                        document.getElementById("8").innerHTML = "\\0";
+                                    }
+                                    else {
+                                        document.getElementById("7").innerHTML = "\\0";
+                                    }
+                                }
+                                else {
+                                    document.getElementById("6").innerHTML = "\\0";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (win) {
+                alert("Congrats! You caused a buffer overflow and are now authenticated")
+            }
+            return false;
+        }
+    </script>
+</head>
+
+<body>
+
+<h1 style="text-align: center;">Buffer Overflow example</h1>
+
+<img src="code.png" class="center">
+
+<form style="text-align: center; padding: 24px;" onsubmit="changeText(); return false;">
+  <label for="fname">Enter input:</label>
+  <input type="text" id="fname" name="fname" maxlength="7"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<div class="flex-container">
+    <div class="flex-box-buffer"><p id="1"></p></div>
+    <div class="flex-box-buffer"><p id="2"></p></div>
+    <div class="flex-box-buffer"><p id="3"></p></div>
+    <div class="flex-box-buffer"><p id="4"></p></div>
+    <div class="flex-box-authenicated"><p id="5"></p></div>
+    <div class="flex-box-authenicated"><p id="6"></p></div>
+    <div class="flex-box-authenicated"><p id="7"></p></div>
+    <div class="flex-box-authenicated"><p id="8"></p></div>
+</div>
+
+<p style="text-align: center; word-spacing: 2400%;">buffer authenticated</p>
+
+</body>
+</html>

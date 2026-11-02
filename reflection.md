@@ -1,0 +1,5 @@
+Reflection:
+
+Building this application helped deepen our understanding of the topic by providing a more visual element to the topics presented in class about buffer overflow. Since we used a similar example to the one in class, it was applicable to what we were learning and allowed us to go through the work ourselves. Additionally, showing how nearby memory can be overwritten answers the question of where the overflow goes in our minds.
+
+For building this application, we first worked at adding simple elements into the html file. These included the input text field, submit button, code image, title, and final the memory boxes. From there we then worked on the simple functionality of the app where we connected text inside of the memory boxes to the input field and populated them once the submit button was pressed. Finally, we ensured that a proper message appeared when the buffer overflowed, letting the user know that it occurred.
